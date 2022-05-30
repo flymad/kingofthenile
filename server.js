@@ -50,7 +50,15 @@ app.post('/register', (req, res) =>{
 });
 
 //DELETE
-
+app.delete('/shop/product/:id', (req, res)=>{
+    model.findByIdAndDelete(req.params.id, (err)=>{
+        if (!err){
+            res.status(200).redirect('/shop');
+        }else{
+            res.status(400).json(err);
+        }
+    })
+})
 
 
 //UPDATE
