@@ -36,17 +36,17 @@ app.engine('jsx', require('express-react-views').createEngine()
 // Index
 app.get("/shop", (req, res)=> {
     // Query model to return all products
-    Product.find({}, (err, foundProduct) => {
-        res.render('Shop',{product: foundProduct})
+    model.find({}, (err, allProduct) => {
+        res.render('shop',{shop: allProduct})
     })  
 });
 
-// NEW
-app.post('/register', (req, res) =>{
-    Product.find.creat(req.body, (err, productCreated)=>{
+// NEW/register
+app.post('/shop', (req, res) =>{
+    model.find.create(req.body, (err, productCreated)=>{
 
     })
-    res.render('/register');
+    res.render('/shop');
 });
 
 //DELETE
@@ -62,28 +62,48 @@ app.delete('/shop/product/:id', (req, res)=>{
 
 
 //UPDATE
+app.put('/shop/product/:id',(req,res)=>{
+    model.findByIdAndUpdate(req.params.id, req.body,{new:true} ,(err, updateProduct)=>{
+        if(!err){
+            res.status(200).redirect('/shop')
+        }else{
+            res.status(400).json(err)
+        }
+    })
+})
 
-
-
-//CREATE
-app.post("/shop", (req,res) => {
-    console.log(req.body)
-    Product.create(req.body,(error,createdProduct)=> {
-        res.redirect("/shop")
+//EDIT
+app.get('/shop/product/:id/edit', (req, res) =>{
+    model.findById(req.params.id, (err, editProductById)=> {
+        if(!err){
+            res.render('edit', {editProduct:editProductById})
+        }else{
+            res.status(400).json(err);
+        }
     })
 })
 
 
+//route to change Quantity
+app.put('/shop/product/:id/buyNow', async(req, res)=> {
+    const foundproduct = await shopModel.findById(req.params.id);
+    shopModel.findByIdAndUpdate(req.params.id, {pstock: foundproduct.pstock - 1}, {new:true}, (err, updateproduct) => {
+        res.redirect(`/shop/product/${req.params.id}`)
+    })
+})
 
-//EDIT
+//route to check product
+app.get("/shop/product/:id", (req, res)=>{
+    shopModel.findById(req.params.id,(err, productByID)=>{
+        res.render('product', {product:productByID})
+    });
+});
 
-
-//SHOW
-
-
-//just reading the attributes of views
-//registeration page view
-
+//rendering shop page
+// 
+app.get("/shop/register", (req,res)=>{
+    res.render('register')
+})
 
 
 
