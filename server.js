@@ -1,57 +1,59 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
-const port = 2700;
+const port = process.env.PORT || 3300;
 const mongoose = require("mongoose");
-const Product = require("./model/model");
+const shopModel = require("./model/shopmodel");
+const overRide = require('method-override');
 
-// ===== MongoDB connection =====
-mongoose.connect(process.env.MONGO_URI,{
-    useNewURLParser:true,
-    useUnifiedTopology:true
+
+
+
+//====== Create DB Connection =======
+mongoose.connect(process.env.MONGO_URI, {
+    useNewUrlParser:true,
+    useUnifiedTopology: true
 })
-mongoose.connection.once('open', () => console.log("Connected to Mongo"));
-
-// ===== Middleware ===== 
-app.use(express.urlencoded({extended:false}));
-app.use(express.static("pictures"))
-
-// Use Express middleware to parse JSON.
-app.use(express.json())
-app.use((req, res, next) =>{
-    console.log("Code working Fine")
-        next();
-})
-
-// defining .jsx engine
-app.set("view engine","jsx")
-app.engine('jsx', require('express-react-views').createEngine()
+mongoose.connection.once('open', () =>
+    console.log('Database is connected')
 );
 
-// ===== Routes =====
 
-// I.N.D.U.C.E.S
-// Index, New, Delete, Update, Create, Edit, Show
+//middleware is using here
+app.use(express.urlencoded({extended:false}));
+app.use(express.static("public"));
+app.use(express.json());
+app.use(overRide('_method'))
+app.use((req, res, next) =>{
+    console.log("Code working Fine")
+    next();
+})
 
-// Index
-app.get("/shop", (req, res)=> {
-    // Query model to return all products
-    model.find({}, (err, allProduct) => {
-        res.render('shop',{shop: allProduct})
-    })  
+
+//defining .jsx engine
+app.set("view engine","jsx");
+app.engine('jsx', require('express-react-views').createEngine());
+
+//======== route to access the views =====
+//Index page Route   
+app.get('/shop', (req, res) => {
+    //Query Model to return all products
+    shopModel.find({}, (err, allProduct)=> {
+        res.render('shop',{
+            shop: allProduct
+        })
+    });
 });
-
-// NEW/register
-app.post('/shop', (req, res) =>{
-    model.find.create(req.body, (err, productCreated)=>{
-
+//route to register product 
+app.post('/shop', (req,res) =>{
+    shopModel.create(req.body, (err, productCreated)=>{
+        // res.send(productCreated);
     })
-    res.render('/shop');
-});
-
-//DELETE
+    res.redirect('/shop');
+})
+//Delete Route to Delete Product
 app.delete('/shop/product/:id', (req, res)=>{
-    model.findByIdAndDelete(req.params.id, (err)=>{
+    shopModel.findByIdAndDelete(req.params.id, (err)=>{
         if (!err){
             res.status(200).redirect('/shop');
         }else{
@@ -60,10 +62,9 @@ app.delete('/shop/product/:id', (req, res)=>{
     })
 })
 
-
-//UPDATE
+//Update Route to update db Value from edit page
 app.put('/shop/product/:id',(req,res)=>{
-    model.findByIdAndUpdate(req.params.id, req.body,{new:true} ,(err, updateProduct)=>{
+    shopModel.findByIdAndUpdate(req.params.id, req.body,{new:true} ,(err, updateProduct)=>{
         if(!err){
             res.status(200).redirect('/shop')
         }else{
@@ -72,9 +73,11 @@ app.put('/shop/product/:id',(req,res)=>{
     })
 })
 
-//EDIT
+
+
+//Edit Route to read DB Data to Form
 app.get('/shop/product/:id/edit', (req, res) =>{
-    model.findById(req.params.id, (err, editProductById)=> {
+    shopModel.findById(req.params.id, (err, editProductById)=> {
         if(!err){
             res.render('edit', {editProduct:editProductById})
         }else{
@@ -82,7 +85,6 @@ app.get('/shop/product/:id/edit', (req, res) =>{
         }
     })
 })
-
 
 //route to change Quantity
 app.put('/shop/product/:id/buyNow', async(req, res)=> {
@@ -99,6 +101,7 @@ app.get("/shop/product/:id", (req, res)=>{
     });
 });
 
+
 //rendering shop page
 // 
 app.get("/shop/register", (req,res)=>{
@@ -107,8 +110,7 @@ app.get("/shop/register", (req,res)=>{
 
 
 
+// console.log("testing");
+
 //calling the browser port here
-app.listen(port, () => console.log(`listening the port ${port}`))
-
-
-
+app.listen(port, ()=> console.log(`listening the port ${port}`))

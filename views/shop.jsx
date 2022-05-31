@@ -3,45 +3,61 @@ const Layout = require("./layout/default-layout");
 
 class shop extends React.Component {
   render() {
-    const Product = this.props.product;
+    const { shop } = this.props;
     return (
-      <Layout title="Product Page">
-        {Product.map((product) => {
-          return (
-            <div>
-              <p>{product.pName}</p>
-              <p>{product.pPrice}</p>
-              <p>{product.pStock}</p>
-              <p>{product.pImage}</p>
-            </div>
-          );
-        })}
-        <h1 class="text-center">Product Page</h1>
-        <div class="container">
-          <div class="row">
-            <div class="col"></div>
-            <div class="col">
-              <div class="card img-thumbnail rounded">
-                <img src="/payprus.jpg" class="card-img-top " alt="..." />
-                <div class="card-body text-center">
-                  <h5 class="card-title">Rose Flowers</h5>
-                  <p class="card-text">
-                    Price <span class="fw-light">$25.99</span>
-                  </p>
-                  <p class="card-text">
-                    Quantity:<span class="fw-light"> 5 </span>
-                  </p>
-                  <a href="/shop" class="btn btn-primary">
-                    Buy Now
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div class="col"></div>
+      <Layout title="Shop Page">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+          <a class="navbar-brand" href="">
+            King Of The Nile
+          </a>
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/shop/register">
+                Register New Product
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+        <div className="container d-flex flex-row mb-3">
+          <div className="row">
+            <ul className="pricing-column col-lg-4 col-md-6">
+              {shop.map((myshop) => {
+                return (
+                  <li className="card img-thumbnail mx-2 mt-2" key={myshop._id}>
+                    <h5 className="card-header text-center">{myshop.pname}</h5>
+                    <a href={`/shop/${myshop._id}`}>
+                      <img
+                        src={myshop.pImage}
+                        className="card-img-top "
+                        alt="Flowers Image"
+                      />
+                    </a>
+                    <div className="card-body text-center">
+                      <p className="card-text">
+                        Price:{" "}
+                        <span className="fw-light">${myshop.pprice}</span>
+                      </p>
+                      <p className="card-text">
+                        Quantity:
+                        <span className="fw-light"> {myshop.pstock} </span>
+                      </p>
+                      <a
+                        href={`/shop/product/${myshop._id}`}
+                        className="btn btn-lg btn-block btn-outline-dark"
+                      >
+                        Buy Now
+                      </a>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
           </div>
         </div>
       </Layout>
     );
   }
 }
+
 module.exports = shop;

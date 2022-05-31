@@ -1,27 +1,22 @@
 const React = require("react");
 const Layout = require("./layout/default-layout");
 
-class register extends React.Component {
+class Edit extends React.Component {
   render() {
+    const editProduct = this.props.editProduct;
     return (
-      <Layout title="Product Registration Page">
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <div className="container container-xxl">
+      <Layout title="Product Edit Page">
+        <div className="container container-sm container-md">
           <div className="row align-items-end">
             <div className="col"></div>
-            <div className="">
-              <br></br>
+            <div className="col text-bg-light card">
               <h3 className="text-uppercase text-secondary text-center">
-                Product Registration Page
+                Product Edit/Update Page
               </h3>
-              <form action="/shop" method="POST">
+              <form
+                action={`/shop/product/${editProduct._id}?_method=PUT`}
+                method="POST"
+              >
                 <div className="mb-3">
                   <label htmlFor="pName" className="form-label text-secondary">
                     Product Name
@@ -31,7 +26,7 @@ class register extends React.Component {
                     class="form-control border border-secondary shadow-sm"
                     id="pName"
                     name="pname"
-                    placeholder="Enter Product Name"
+                    defaultValue={editProduct.pname}
                   />
                 </div>
                 <div className="mb-3">
@@ -43,7 +38,7 @@ class register extends React.Component {
                     class="form-control border border-secondary shadow-sm"
                     id="pPrice"
                     name="pprice"
-                    placeholder="Enter Product Price"
+                    defaultValue={editProduct.pprice}
                   />
                 </div>
                 <div className="mb-3">
@@ -55,29 +50,27 @@ class register extends React.Component {
                     class="form-control border border-secondary shadow-sm"
                     id="pStock"
                     name="pstock"
-                    placeholder="Enter Product Stock"
+                    defaultValue={editProduct.pstock}
                   />
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="pImage" className="form-label text-secondary">
-                    Product Stock
+                  <label htmlFor="pStock" className="form-label text-secondary">
+                    Product Image
                   </label>
                   <input
                     type="text"
                     class="form-control border border-secondary shadow-sm"
-                    id="pImage"
+                    id="pStock"
                     name="pImage"
-                    placeholder="Enter Image URL"
+                    defaultValue={editProduct.pImage}
                   />
                 </div>
-                <div className="mb-3">
-                  <button
+                <div class="mb-3">
+                  <input
                     type="submit"
-                    className="btn btn-outline-success form-control"
-                    value="Register Product"
-                  >
-                    Create Product
-                  </button>
+                    className="btn btn-outline-info form-control"
+                    value="Update Product"
+                  />
                 </div>
               </form>
             </div>
@@ -89,4 +82,4 @@ class register extends React.Component {
   }
 }
 
-module.exports = register;
+module.exports = Edit;
