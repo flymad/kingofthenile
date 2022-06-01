@@ -1,7 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
-const port = process.env.PORT || 3300;
+const port = process.env.PORT || 5400;
 const mongoose = require("mongoose");
 const shopModel = require("./model/shopmodel");
 const overRide = require('method-override');
@@ -51,7 +51,7 @@ app.post('/shop', (req,res) =>{
     })
     res.redirect('/shop');
 })
-//Delete Route to Delete Product
+//Delete Route 
 app.delete('/shop/product/:id', (req, res)=>{
     shopModel.findByIdAndDelete(req.params.id, (err)=>{
         if (!err){

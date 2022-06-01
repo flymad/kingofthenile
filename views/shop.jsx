@@ -13,15 +13,15 @@ class shop extends React.Component {
           <ul class="navbar-nav ms-auto">
             <li class="nav-item">
               <a class="nav-link" href="/shop/register">
-                Register New Product
+                Create New Product
               </a>
             </li>
           </ul>
         </nav>
 
-        <div className="container d-flex flex-row mb-3">
+        <div className="container flex-row align-items-center">
           <div className="row">
-            <ul className="pricing-column col-lg-4 col-md-6">
+            <ul className="col-lg-4 col-md-5">
               {shop.map((myshop) => {
                 return (
                   <li className="card img-thumbnail mx-2 mt-2" key={myshop._id}>
@@ -44,9 +44,9 @@ class shop extends React.Component {
                       </p>
                       <a
                         href={`/shop/product/${myshop._id}`}
-                        className="btn btn-lg btn-block btn-outline-dark"
+                        className="btn btn-sm btn-block btn-outline-dark"
                       >
-                        Buy Now
+                        Product Details
                       </a>
                     </div>
                   </li>

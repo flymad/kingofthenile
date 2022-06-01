@@ -19,10 +19,10 @@ class register extends React.Component {
             <div className="">
               <br></br>
               <h3 className="text-uppercase text-secondary text-center">
-                Product Registration Page
+                New Product
               </h3>
               <form action="/shop" method="POST">
-                <div className="mb-3">
+                <div class="inline" className="mb-3">
                   <label htmlFor="pName" className="form-label text-secondary">
                     Product Name
                   </label>
@@ -73,7 +73,7 @@ class register extends React.Component {
                 <div className="mb-3">
                   <button
                     type="submit"
-                    className="btn btn-outline-success form-control"
+                    className="btn btn-outline-dark form-control"
                     value="Register Product"
                   >
                     Create Product

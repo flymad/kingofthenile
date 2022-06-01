@@ -6,6 +6,7 @@ class product extends React.Component {
     const product = this.props.product;
     return (
       <Layout title="Product Page">
+        <br></br>
         <h1 className="text-center">Product Page</h1>
         <div className="container">
           <div className="row">
@@ -44,7 +45,7 @@ class product extends React.Component {
                       class={
                         product.pstock <= 0
                           ? "btn btn-outline-danger disabled"
-                          : "btn btn-outline-primary"
+                          : "btn btn-lg btn-block btn-outline-dark"
                       }
                       value="Buy Now"
                     />
@@ -76,9 +77,18 @@ class product extends React.Component {
                     </form>
                   </div>
                   <div className="mb-3">
-                    <a href="/shop" class="link-primary text-decoration-none">
-                      Continue Shopping
-                    </a>
+                    <button
+                      type="submit"
+                      className="btn btn-primary mt-4"
+                      value="limited quantity Shopping"
+                    >
+                      <a
+                        href="/shop"
+                        className="text-light text-decoration-none"
+                      >
+                        Continue Shopping
+                      </a>
+                    </button>
                   </div>
                 </div>
               </div>

@@ -6,18 +6,17 @@ class Edit extends React.Component {
     const editProduct = this.props.editProduct;
     return (
       <Layout title="Product Edit Page">
-        <div className="container container-sm container-md">
+        <div className="container container-xxl">
           <div className="row align-items-end">
             <div className="col"></div>
-            <div className="col text-bg-light card">
-              <h3 className="text-uppercase text-secondary text-center">
-                Product Edit/Update Page
-              </h3>
+            <div className="">
+              <br></br>
+              <h3 className="text-secondary text-center">Edit Product</h3>
               <form
                 action={`/shop/product/${editProduct._id}?_method=PUT`}
                 method="POST"
               >
-                <div className="mb-3">
+                <div className="col mb-3">
                   <label htmlFor="pName" className="form-label text-secondary">
                     Product Name
                   </label>
@@ -29,7 +28,7 @@ class Edit extends React.Component {
                     defaultValue={editProduct.pname}
                   />
                 </div>
-                <div className="mb-3">
+                <div className="col mb-3">
                   <label htmlFor="pPrice" className="form-label text-secondary">
                     Product Price
                   </label>
@@ -41,7 +40,7 @@ class Edit extends React.Component {
                     defaultValue={editProduct.pprice}
                   />
                 </div>
-                <div className="mb-3">
+                <div className="col mb-3">
                   <label htmlFor="pStock" className="form-label text-secondary">
                     Product Stock
                   </label>
@@ -68,7 +67,7 @@ class Edit extends React.Component {
                 <div class="mb-3">
                   <input
                     type="submit"
-                    className="btn btn-outline-info form-control"
+                    className="btn btn-outline-dark form-control"
                     value="Update Product"
                   />
                 </div>
